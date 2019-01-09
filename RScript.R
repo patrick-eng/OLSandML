@@ -28,15 +28,13 @@ summary(l_model)
 ### EXAMINE THE MODEL RESIDUALS
 
 ## Residual plot
-plot(residuals(l_model), main="Linear Model Residuals")
-abline(0,0, col="red")
+plot(l_model$fitted.values, residuals(l_model), main="Linear Model Residuals");abline(0,0, col="red")
 
 ## QQNorm plot
 l_model <- lm(HealthSpending ~ GDPPC, data=my_data)
 l_resids <- rstandard(l_model)
 
-qqnorm(l_resids, main="Linear Model QQPlot")
-qqline(l_resids)
+qqnorm(l_resids, main="Linear Model QQPlot");qqline(l_resids)
 
 
 ### MODEL SCATTER PLOT
@@ -65,12 +63,10 @@ summary(ml_model)
 ### CHECK ML RESIDUALS
 
 ## Residuals plot
-plot(residuals(mlm_model), main="ML Model Residuals")
-abline(0,0, col="red")
+plot(mlm_model$fitted.values, residuals(mlm_model), main="ML Model Residuals");abline(0,0, col="red")
 
 ## QQNorm plot
-qqnorm(ml_resids, main="ML Model QQPlot")
-qqline(ml_resids)
+qqnorm(ml_resids, main="ML Model QQPlot");qqline(ml_resids)
 
 ### PLOT ML MODELS ESTIMATES
 plot_summs(ml_model, ci_level=0.9, color.class = "blue")
