@@ -17,7 +17,7 @@ bw <- diff(range(x)) / (2 * IQR(x) / length(x)^(1/3))
 
 ## Plot graph
 (graph <- g + geom_histogram(bins=bw)
-  + labs(title="Distribution of Health Spending Variable"))
+  + labs(title="Distribution of Health Spending Variable") + theme_bw())
 
 
 ### FIT A BIVARIATE OLS
@@ -44,7 +44,7 @@ g <- ggplot(my_data, aes(x=GDPPC, y=HealthSpending))
 (graph <- g + geom_point() 
   + geom_smooth(method="lm")
   + labs(x = "GDP Per Capita (1000s USD)", 
-         y = "Health Spending (% of GDP)", title ="Linear Model Scatter Plot"))
+         y = "Health Spending (% of GDP)", title ="Linear Model Scatter Plot") + theme_bw())
 
 ## With country labels
 g <- ggplot(my_data, aes(x=GDPPC, y=HealthSpending))
@@ -52,7 +52,8 @@ g <- ggplot(my_data, aes(x=GDPPC, y=HealthSpending))
   + geom_smooth(method="lm") 
   + geom_label(label=my_data$Country, label.size = 0.1, hjust = "inward")
   + labs(x = "GDP Per Capita (1000s USD)", 
-         y = "Health Spending (% of GDP)", title ="Linear Model Scatter Plot with Country Labels"))
+         y = "Health Spending (% of GDP)", title ="Linear Model Scatter Plot with Country Labels") + 
+    theme_bw())
 
 
 ### FIT MULTIPLE LINEAR REGRESSION MODEL
@@ -63,10 +64,12 @@ summary(ml_model)
 ### CHECK ML RESIDUALS
 
 ## Residuals plot
-plot(mlm_model$fitted.values, residuals(mlm_model), main="ML Model Residuals");abline(0,0, col="red")
+plot(ml_model$fitted.values, residuals(ml_model), main="ML Model Residuals");abline(0,0, col="red")
 
 ## QQNorm plot
+ml_resids <- rstandard(ml_model)
 qqnorm(ml_resids, main="ML Model QQPlot");qqline(ml_resids)
 
 ### PLOT ML MODELS ESTIMATES
+library(jtools)
 plot_summs(ml_model, ci_level=0.9, color.class = "blue")
